@@ -4,6 +4,7 @@ import {
   Post,
   Delete,
   Put,
+  Patch,
   Body,
   Param,
   Query,
@@ -13,9 +14,8 @@ import { MovieService } from './movie.service';
 
 @Controller('movie')
 export class MovieController {
-
   constructor(private readonly movieService: MovieService) {}
-  
+
   @Get()
   getAll(): Movie[] {
     return this.movieService.getAll();
@@ -41,11 +41,8 @@ export class MovieController {
     return this.movieService.deleteOne(movieId);
   }
 
-  @Put('/:id')
+  @Patch('/:id')
   update(@Param('id') movieId: string, @Body() updateData) {
-    return {
-      updateMovie: movieId,
-      updateData,
-    };
+    return this.movieService.update(movieId, updateData);
   }
 }
