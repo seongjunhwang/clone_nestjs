@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Delete,
-  Put,
   Patch,
   Body,
   Param,
@@ -11,6 +10,8 @@ import {
 } from '@nestjs/common';
 import { Movie } from './entities/movie.entity';
 import { MovieService } from './movie.service';
+import CreateMovieDto from './dto/create-movie.dto';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
 @Controller('movie')
 export class MovieController {
@@ -27,22 +28,22 @@ export class MovieController {
   }
 
   @Get('/:id')
-  getOne(@Param('id') movieId: string): Movie {
+  getOne(@Param('id') movieId: number): Movie {
     return this.movieService.getOne(movieId);
   }
 
   @Post()
-  create(@Body() movieData) {
+  create(@Body() movieData: CreateMovieDto) {
     return this.movieService.create(movieData);
   }
 
   @Delete('/:id')
-  remove(@Param('id') movieId: string) {
+  remove(@Param('id') movieId: number) {
     return this.movieService.deleteOne(movieId);
   }
 
   @Patch('/:id')
-  update(@Param('id') movieId: string, @Body() updateData) {
+  update(@Param('id') movieId: number, @Body() updateData: UpdateMovieDto) {
     return this.movieService.update(movieId, updateData);
   }
 }
